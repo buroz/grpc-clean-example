@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: 16
+        VARIANT: '1.17-buster'
+        USER_UID: 1000
+        USER_GID: 1000
+    command: sleep infinity
+    volumes:
+      - ..:/ddd:delegated
+
+  rabbitmq:
+    image: 'rabbitmq:management-alpine'
+    restart: always
+    network_mode: 'service:app'
+
+  arangodb:
+    image: arangodb/arangodb:latest
+    restart: unless-stopped
+    environment:
+      ARANGO_ROOT_PASSWORD: 'example'
+    network_mode: 'service:app'

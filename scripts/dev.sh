@@ -1,0 +1,1 @@
+go run cmd/accounts_service/main.go --config configs/main.dev.json

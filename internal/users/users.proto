@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package users;
+
+import "internal/common/service_error.proto";
+import "internal/common/empty.proto";
+
+option go_package = "github.com/buroz/grpc-clean-example/internal/users";
+
+service UsersService {
+  rpc Register (RegisterRequest) returns (TokenResponse) {}
+  rpc ConfirmRegistration (ConfirmRegistrationRequest) returns (ConfirmRegistrationResponse) {}
+  rpc Login (LoginRequest) returns (TokenResponse) {}
+  rpc Profile (common.empty.Empty) returns (ProfileResponse) {}
+}
+
+message RegisterRequest {
+	string first_name = 1;
+	string last_name = 2;
+	string email = 3;
+	string password = 4;
+}
+
+message ConfirmRegistrationRequest {
+  string token = 1;
+}
+
+message ConfirmRegistrationResponse {
+  bool success = 1;
+  common.errors.ServiceError errors = 2;
+}
+
+message LoginRequest {
+	string email = 1;
+	string password = 2;
+}
+
+message ProfileResult {
+  string email = 1;
+  string first_name = 2;
+  string last_name = 3;
+}
+
+
+message ProfileResponse {
+  bool success = 1;
+  common.errors.ServiceError errors = 2;
+  ProfileResult result = 3;
+}
+
+message TokenResult {
+  string token = 1;
+  string refresh_token = 2;
+}
+
+message TokenResponse {
+  bool success = 1;
+  common.errors.ServiceError errors = 2;
+  TokenResult result = 3;
+}

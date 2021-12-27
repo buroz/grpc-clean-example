@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package common.errors;
+
+option go_package = "github.com/buroz/grpc-clean-example/internal/common";
+
+message ValidationError {
+  string field_name = 1;
+  string cause = 2;
+}
+
+message ServiceError {
+  int32 code = 1; // TODO: enum...
+  repeated ValidationError validation_errors = 2;
+  repeated string duplicated_fields = 3;
+}

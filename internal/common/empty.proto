@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package common.empty;
+
+option go_package = "github.com/buroz/grpc-clean-example/internal/common";
+
+message Empty {}
